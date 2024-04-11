@@ -19,6 +19,24 @@ U8G2_SSD1306_128X64_NONAME_F_HW_I2C U8G2(U8G2_R0); // [full framebuffer, size = 
 #define MISO2 PB14
 #define SCLK2 PB13
 
+/// To connect an STM32F411 Discovery board to SI4432 using Arduino and Arduino_STM32
+/// connect the pins like this: https://habr.com/ru/articles/307836/
+///
+///                 STM32        SI4432
+///                 GND----------GND-\    (ground in)
+///                 PA9----------SDN-/    (shutdown in)           - Если установить высокий уровень на SDN, то SI4432 переходит в режим Shutdown (15нА)
+/// interrupt   pin PA8----------NIRQ     (interrupt request out) - Если произошло событие (приём/передача) уровень опустится в нуль
+///         SS pin PB12----------NSEL(CS) (chip select in)		  - Выбор модуля путем установки NSEL в 0
+///        SCK pin PB13----------SCK      (SPI clock in)
+///       MOSI pin PB15----------SDI      (SPI Data in)
+///       MISO pin PB14----------SDO      (SPI data out)
+///								 GPIO2	  (Настраиваемый пин)
+///                 VDD----------VCC      (3.3V in)
+///................................................
+///                 GND----------GND-\ (ground in)
+
+
+
 item Cube("3D Cube", bitmap_icon_3dcube);
 // item Battery("Battery", bitmap_icon_battery, 1);
 item Sys_info("Sys. info", bitmap_icon_dashboard);
